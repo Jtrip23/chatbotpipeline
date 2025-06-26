@@ -5,7 +5,10 @@ stages:
 variables:
   IMAGE_NAME: "$CI_PROJECT_NAME"
   DOCKER_IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
-  NEXUS_REPO_URL: "nexus.example.com:8083"
+  NEXUS_REPO_URL: "https://nexus-ci.onefiserv.net/repository/Maven_Central/"
+  NEXUS_REPO_USER: "svc-apim-cicd-dev"
+  NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
+
 
 build_python_image:
   stage: build
