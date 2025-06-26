@@ -2,7 +2,7 @@ Running with gitlab-runner 16.11.2 (1d04b67a)
   on l7lt2apmglr0004-Global-GitLab-Cloud-Docker-apihub-shared FeEX_mAX, system ID: s_842e1c8182d6
 Resolving secrets
 Preparing the "docker" executor
-00:05
+00:06
 Using Docker executor with image fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 ...
 Pulling docker image fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 ...
 Using docker image sha256:4b91739ef5bb8a2e72adddd1184182a8fe879b55b1c8aec5ac74c54e32f4822d for fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 with digest fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind@sha256:52594cb78b4858d825d4adb9e409afb381b87dd73ea467d9ba54ef558a204508 ...
@@ -10,20 +10,18 @@ Preparing environment
 00:01
 Running on runner-feexmax-project-48368-concurrent-0 via l7lt2apmglr0004...
 Getting source from Git repository
-00:04
+00:03
 Fetching changes with git depth set to 20...
-Initialized empty Git repository in /builds/fts-apimanagement/fts-python-microservices/ai-chatbot/.git/
-Created fresh repository.
+Reinitialized existing Git repository in /builds/fts-apimanagement/fts-python-microservices/ai-chatbot/.git/
 Checking out bd2891f1 as detached HEAD (ref is main)...
 Skipping Git submodules setup
 Executing "step_script" stage of the job script
-00:08
+00:01
 Using docker image sha256:4b91739ef5bb8a2e72adddd1184182a8fe879b55b1c8aec5ac74c54e32f4822d for fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 with digest fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind@sha256:52594cb78b4858d825d4adb9e409afb381b87dd73ea467d9ba54ef558a204508 ...
-$ echo "Building Docker image for $CI_PROJECT_NAME"
-Building Docker image for ai-chatbot
-$ IMAGE_NAME="$FMK_NEXUS/${CI_PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}"
-$ docker build -t "$IMAGE_NAME" .
-ERROR: error during connect: Head "http://docker:2375/_ping": dial tcp: lookup docker on 10.225.225.12:53: no such host
+$ echo "Deploying vendor image to Nexus..."
+Deploying vendor image to Nexus...
+$ chmod +x vendor-deploy.sh
+chmod: vendor-deploy.sh: No such file or directory
 Cleaning up project directory and file based variables
-00:00
+00:01
 ERROR: Job failed: exit code 1
