@@ -3,45 +3,44 @@ stages:
   - push
 
 variables:
-  IMAGE_NAME: "$CI_PROJECT_NAME"
-  DOCKER_IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
-  NEXUS_REPO_URL: "https://nexus-ci.onefiserv.net/repository/Maven_Central/"
-  NEXUS_REPO_USER: "svc-apim-cicd-dev"
-  NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
-
+  APM_ID: "0006528"
+  IMAGE_NAME: "apihub-apigee-python"
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+  NEXUS_REGISTRY: "nexus-ci.nexus.onefiserv.net"
+  NEXUS_REPO_PATH: "$NEXUS_REGISTRY/apm/$APM_ID/$IMAGE_NAME:$IMAGE_TAG"
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_TLS_CERTDIR: ""
 
 build_python_image:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
   before_script:
-    - docker login -u "$NEXUS_REPO_USER" -p "$NEXUS_REPO_PASS" $NEXUS_REPO_URL
+    - echo "$Nexus_REPO_PASS" | docker login -u "$Nexus_REPO_USER" --password-stdin $NEXUS_REGISTRY
   script:
-    - echo "Checking for Python code changes..."
     - |
+      echo "Checking for Python file changes..."
       if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -E '\.py$'; then
-        echo "Python code changed. Building image..."
-        docker build -t $NEXUS_REPO_URL/$IMAGE_NAME:$CI_COMMIT_SHORT_SHA .
+        echo "Python code changed. Building Docker image..."
+        docker build -t $NEXUS_REPO_PATH .
       else
         echo "No Python code changes detected. Skipping build."
         exit 0
       fi
-  artifacts:
-    paths:
-      - image.tag
-    when: always
 
 push_to_nexus:
   stage: push
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
   before_script:
-    - docker login -u "$NEXUS_REPO_USER" -p "$NEXUS_REPO_PASS" $NEXUS_REPO_URL
+    - echo "$Nexus_REPO_PASS" | docker login -u "$Nexus_REPO_USER" --password-stdin $NEXUS_REGISTRY
   script:
-    - echo "Pushing image to Nexus..."
-    - docker push $NEXUS_REPO_URL/$IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+    - echo "Pushing Docker image to Nexus..."
+    - docker push $NEXUS_REPO_PATH
   rules:
     - changes:
         - "**/*.py"
