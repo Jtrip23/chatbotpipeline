@@ -1,32 +1,28 @@
-variables:
-  FMK_NEXUS: fmk.nexus-ci.onefiserv.net/apm/0007440
-  NEXUS_REPO_USER_DEV: "svc-apim-cicd-dev"
-  NEXUS_REPO_PASS_DEV: "F_arX1Z%fIQSfZEM@aJL9RRk*"
-  GITLAB_PER_TOKEN: "F42ozyyemp_pf3szWGsB"
+# master-pipeline.yaml
 
-default:
-  tags:
-    - apimhub-shell
+variables:
+  IMAGE_NAME: "$CI_PROJECT_NAME"
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+  DOCKER_IMAGE: "${FMK_NEXUS}/${IMAGE_NAME}:${IMAGE_TAG}"
 
 stages:
-  - vendor-deploy
-  - custom-deploy
+  - build
+  - push
 
-deploy-vendor-images:
-  stage: vendor-deploy
+build-image:
+  stage: build
   script:
-    - echo "Deploying vendor image to Nexus..."
-    - chmod +x vendor-deploy.sh
-    - ./vendor-deploy.sh "$NEXUS_REPO_USER_DEV" "$NEXUS_REPO_PASS_DEV"
-  rules:
-    - changes:
-        - vendor-image-values.json  # Only runs if this file changes
+    - echo "Building Docker image..."
+    - docker build -t "$DOCKER_IMAGE" .
+  only:
+    - branches
 
-deploy-custom-images:
-  stage: custom-deploy
+push-image:
+  stage: push
   script:
-    - echo "Deploying custom image to Nexus..."
-    - chmod +x custom-deploy.sh
-    - ./custom-deploy.sh "$NEXUS_REPO_USER_DEV" "$NEXUS_REPO_PASS_DEV" "$GITLAB_USERNAME" "$GITLAB_PER_TOKEN"
-  rules:
-    - when: always  # This will run on every commit to any branch
+    - echo "Logging in to Nexus Docker Registry..."
+    - echo "$NEXUS_REPO_PASSWORD" | docker login -u "$NEXUS_REPO_USER" --password-stdin "$FMK_NEXUS"
+    - echo "Pushing image to Nexus..."
+    - docker push "$DOCKER_IMAGE"
+  only:
+    - branches
