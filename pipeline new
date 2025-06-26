@@ -1,28 +1,44 @@
-# master-pipeline.yaml
-
-variables:
-  IMAGE_NAME: "$CI_PROJECT_NAME"
-  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
-  DOCKER_IMAGE: "${FMK_NEXUS}/${IMAGE_NAME}:${IMAGE_TAG}"
-
 stages:
   - build
   - push
 
-build-image:
-  stage: build
-  script:
-    - echo "Building Docker image..."
-    - docker build -t "$DOCKER_IMAGE" .
-  only:
-    - branches
+variables:
+  IMAGE_NAME: "$CI_PROJECT_NAME"
+  DOCKER_IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+  NEXUS_REPO_URL: "nexus.example.com:8083"
 
-push-image:
-  stage: push
+build_python_image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$NEXUS_REPO_USER" -p "$NEXUS_REPO_PASS" $NEXUS_REPO_URL
   script:
-    - echo "Logging in to Nexus Docker Registry..."
-    - echo "$NEXUS_REPO_PASSWORD" | docker login -u "$NEXUS_REPO_USER" --password-stdin "$FMK_NEXUS"
+    - echo "Checking for Python code changes..."
+    - |
+      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -E '\.py$'; then
+        echo "Python code changed. Building image..."
+        docker build -t $NEXUS_REPO_URL/$IMAGE_NAME:$CI_COMMIT_SHORT_SHA .
+      else
+        echo "No Python code changes detected. Skipping build."
+        exit 0
+      fi
+  artifacts:
+    paths:
+      - image.tag
+    when: always
+
+push_to_nexus:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$NEXUS_REPO_USER" -p "$NEXUS_REPO_PASS" $NEXUS_REPO_URL
+  script:
     - echo "Pushing image to Nexus..."
-    - docker push "$DOCKER_IMAGE"
-  only:
-    - branches
+    - docker push $NEXUS_REPO_URL/$IMAGE_NAME:$CI_COMMIT_SHORT_SHA
+  rules:
+    - changes:
+        - "**/*.py"
