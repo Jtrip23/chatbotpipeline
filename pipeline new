@@ -1,6 +1,3 @@
-# Reusable GitLab CI pipeline to build & push Docker image to Nexus
-# Triggered on any commit
-
 variables:
   FMK_NEXUS: fmk.nexus-ci.onefiserv.net/apm/0007440
 
@@ -21,7 +18,8 @@ build-and-push-image:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   before_script:
-    - echo "Docker version: $(docker --version)"
+    - echo "Checking Docker version"
+    - docker --version
   script:
     - echo "Building Docker image for $CI_PROJECT_NAME"
     - IMAGE_NAME="$FMK_NEXUS/$DOCKER_IMAGE_NAME:${CI_COMMIT_SHORT_SHA}"
