@@ -1,30 +1,33 @@
 variables:
   FMK_NEXUS: fmk.nexus-ci.onefiserv.net/apm/0007440
+  IMAGE_NAME: "$CI_PROJECT_NAME"
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
 
 default:
   tags:
-    - apimhub
+    - apimhub-shell
 
 stages:
-  - build-and-push
+  - build
+  - push
 
-build-and-push-image:
-  stage: build-and-push
-  image: docker:24.0.5
-  services:
-    - name: docker:24.0.5-dind
-      alias: docker
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  before_script:
-    - echo "Checking Docker version"
-    - docker --version
+build-image:
+  stage: build
   script:
-    - echo "Building Docker image for $CI_PROJECT_NAME"
-    - IMAGE_NAME="$FMK_NEXUS/$DOCKER_IMAGE_NAME:${CI_COMMIT_SHORT_SHA}"
-    - docker build -t "$IMAGE_NAME" .
-    - echo "$NEXUS_REPO_PASS_DEV" | docker login -u "$NEXUS_REPO_USER_DEV" --password-stdin "$FMK_NEXUS"
-    - docker push "$IMAGE_NAME"
+    - echo "Building Docker image..."
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker tag $IMAGE_NAME:$IMAGE_TAG $FMK_NEXUS/$IMAGE_NAME:$IMAGE_TAG
   rules:
-    - when: always
+    - changes:
+        - Dockerfile
+        - src/**/*
+        - .gitlab-ci.yml
+
+push-image:
+  stage: push
+  script:
+    - echo "Logging into Nexus and pushing image..."
+    - echo "$NEXUS_REPO_PASS_DEV" | docker login $FMK_NEXUS -u "$NEXUS_REPO_USER_DEV" --password-stdin
+    - docker push $FMK_NEXUS/$IMAGE_NAME:$IMAGE_TAG
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
