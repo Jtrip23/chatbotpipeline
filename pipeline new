@@ -1,5 +1,8 @@
 variables:
   FMK_NEXUS: fmk.nexus-ci.onefiserv.net/apm/0007440
+  NEXUS_REPO_USER_DEV: "svc-apim-cicd-dev"
+  NEXUS_REPO_PASS_DEV: "F_arX1Z%fIQSfZEM@aJL9RRk*"
+  GITLAB_PER_TOKEN: "F42ozyyemp_pf3szWGsB"
 
 default:
   tags:
