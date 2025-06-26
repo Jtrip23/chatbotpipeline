@@ -1,0 +1,21 @@
+# chatbot-ci-template.yml
+variables:
+  FMK_NEXUS: fmk.nexus-ci.onefiserv.net/apm/0007440
+
+default:
+  tags:
+    - apimhub-shell
+
+stages:
+  - build-and-push
+
+build-and-push-image:
+  stage: build-and-push
+  script:
+    - echo "Building Docker image for $CI_PROJECT_NAME"
+    - IMAGE_NAME="$FMK_NEXUS/${CI_PROJECT_NAME}:${CI_COMMIT_SHORT_SHA}"
+    - docker build -t "$IMAGE_NAME" .
+    - echo "$NEXUS_REPO_PASS_DEV" | docker login -u "$NEXUS_REPO_USER_DEV" --password-stdin "$FMK_NEXUS"
+    - docker push "$IMAGE_NAME"
+  rules:
+    - when: always
