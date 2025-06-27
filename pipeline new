@@ -5,29 +5,28 @@ stages:
 variables:
   IMAGE_NAME: "$CI_PROJECT_NAME"
   IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+  FULL_IMAGE_NAME: "fmk.nexus-ci.onefiserv.net/apm/006528/$IMAGE_NAME:$IMAGE_TAG"
+  NEXUS_REGISTRY: "fmk.nexus-ci.onefiserv.net"
   NEXUS_REPO_USER: "svc-apim-cicd-dev"
   NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
-  NEXUS_REGISTRY_URL: "fmk.nexus-ci.onefiserv.net/apm/006528"
-  FULL_IMAGE_NAME: "$NEXUS_REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG"
 
 default:
   tags:
-    - apimhub-shell  # Runner with Docker installed
+    - apimhub-shell   # Use your runner with docker installed (not dind)
 
-build_image:
+build_and_push_image:
   stage: build
   script:
-    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
-    - docker build -t $FULL_IMAGE_NAME .
-  rules:
-    - changes:
-        - "**/*"
+    - echo "Logging in to Nexus Docker registry..."
+    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY
 
-push_image:
-  stage: push
-  script:
-    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
+    - echo "Building Docker image..."
+    - docker build -t $FULL_IMAGE_NAME .
+
+    - echo "Pushing Docker image to Nexus..."
     - docker push $FULL_IMAGE_NAME
+
+    - echo "Image $FULL_IMAGE_NAME built and pushed successfully."
   rules:
     - changes:
         - "**/*"
