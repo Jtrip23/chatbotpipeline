@@ -7,7 +7,7 @@ Using Docker executor with image fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:
 Pulling docker image fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 ...
 Using docker image sha256:4b91739ef5bb8a2e72adddd1184182a8fe879b55b1c8aec5ac74c54e32f4822d for fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 with digest fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind@sha256:52594cb78b4858d825d4adb9e409afb381b87dd73ea467d9ba54ef558a204508 ...
 Preparing environment
-00:01
+00:02
 Running on runner-92btkp-project-48368-concurrent-0 via l7lt2apmglr0005...
 Getting source from Git repository
 00:02
@@ -16,13 +16,17 @@ Reinitialized existing Git repository in /builds/fts-apimanagement/fts-python-mi
 Checking out 2b8ab071 as detached HEAD (ref is main)...
 Skipping Git submodules setup
 Executing "step_script" stage of the job script
-00:06
+00:05
 Using docker image sha256:4b91739ef5bb8a2e72adddd1184182a8fe879b55b1c8aec5ac74c54e32f4822d for fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind:FMK-07-01-24 with digest fmk.nexus.onefiserv.net/fmk/ext-tools/fmk-dind@sha256:52594cb78b4858d825d4adb9e409afb381b87dd73ea467d9ba54ef558a204508 ...
-$ echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
+$ echo "Logging in to Nexus Docker registry..."
+Logging in to Nexus Docker registry...
+$ echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY
 WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
 Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 Login Succeeded
+$ echo "Building Docker image..."
+Building Docker image...
 $ docker build -t $FULL_IMAGE_NAME .
 ERROR: error during connect: Head "http://docker:2375/_ping": dial tcp: lookup docker on 10.225.225.12:53: no such host
 Cleaning up project directory and file based variables
