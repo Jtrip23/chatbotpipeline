@@ -1,44 +1,43 @@
 Running with gitlab-runner 16.11.2 (1d04b67a)
-  on l7lt2apmglr0004-Global-GitLab-Cloud-Docker-apihub-shared FeEX_mAX, system ID: s_842e1c8182d6
+  on l7lt2apmglr0005-Global-GitLab-Cloud-Docker-apihub-shared 9_2bTK_P, system ID: s_842e1c8182d6
 Resolving secrets
 Preparing the "docker" executor
-00:07
+01:03
 Using Docker executor with image docker:latest ...
 Starting service docker:dind ...
 Pulling docker image docker:dind ...
 Using docker image sha256:6892cb0e669d8bf6d40d1421bfd62b0aec81041706f7b45de7a03514cfef527b for docker:dind with digest docker@sha256:d33eb93fe02683e984e6f8a93c0b3d85bb74f56ec83922bc39fb34ba23ab42bc ...
-WARNING: Service docker:dind is already created. Ignoring.
 Waiting for services to be up and running (timeout 30 seconds)...
-*** WARNING: Service runner-feexmax-project-48368-concurrent-0-56dd79a8479c4c3b-docker-0 probably didn't start properly.
+*** WARNING: Service runner-92btkp-project-48368-concurrent-0-729d4e61751a45b0-docker-0 probably didn't start properly.
 Health check error:
-start service container: Error response from daemon: Cannot link to a non running container: /runner-feexmax-project-48368-concurrent-0-56dd79a8479c4c3b-docker-0 AS /runner-feexmax-project-48368-concurrent-0-56dd79a8479c4c3b-docker-0-wait-for-service/service (services.go:215:0s)
+start service container: Error response from daemon: Cannot link to a non running container: /runner-92btkp-project-48368-concurrent-0-729d4e61751a45b0-docker-0 AS /runner-92btkp-project-48368-concurrent-0-729d4e61751a45b0-docker-0-wait-for-service/service (services.go:215:0s)
 Service container logs:
-2025-06-26T18:36:09.401040168Z cat: can't open '/proc/net/ip_tables_names': No such file or directory
-2025-06-26T18:36:09.402568076Z cat: can't open '/proc/net/ip6_tables_names': No such file or directory
-2025-06-26T18:36:09.403977375Z cat: can't open '/proc/net/arp_tables_names': No such file or directory
-2025-06-26T18:36:09.412488873Z ip: can't find device 'nf_tables'
-2025-06-26T18:36:09.416616163Z nf_tables_set          49152 22 
-2025-06-26T18:36:09.416734971Z nf_tables             192512 445 nft_counter,nft_compat,nft_fib_inet,nft_fib_ipv4,nft_fib_ipv6,nft_fib,nft_reject_inet,nft_reject,nft_ct,nf_tables_set,nft_chain_nat
-2025-06-26T18:36:09.416753473Z nfnetlink              16384  6 nf_conntrack_netlink,nft_compat,ip_set,nf_tables
-2025-06-26T18:36:09.416764173Z libcrc32c              16384  4 nf_nat,nf_conntrack,nf_tables,xfs
-2025-06-26T18:36:09.418033363Z modprobe: can't change directory to '/lib/modules': No such file or directory
-2025-06-26T18:36:09.425135962Z ip: can't find device 'ip_tables'
-2025-06-26T18:36:09.429965901Z modprobe: can't change directory to '/lib/modules': No such file or directory
-2025-06-26T18:36:09.430809360Z ip: can't find device 'ip6_tables'
-2025-06-26T18:36:09.438970734Z modprobe: can't change directory to '/lib/modules': No such file or directory
-2025-06-26T18:36:09.444356113Z iptables v1.8.11 (nf_tables)
-2025-06-26T18:36:09.454335214Z mount: permission denied (are you root?)
-2025-06-26T18:36:09.454704640Z Could not mount /sys/kernel/security.
-2025-06-26T18:36:09.454726941Z AppArmor detection and --privileged mode might break.
-2025-06-26T18:36:09.457724252Z mount: permission denied (are you root?)
+2025-06-27T04:01:22.699287756Z cat: can't open '/proc/net/ip_tables_names': No such file or directory
+2025-06-27T04:01:22.699351761Z cat: can't open '/proc/net/ip6_tables_names': No such file or directory
+2025-06-27T04:01:22.700066811Z cat: can't open '/proc/net/arp_tables_names': No such file or directory
+2025-06-27T04:01:22.711418709Z ip: can't find device 'nf_tables'
+2025-06-27T04:01:22.716073536Z nf_tables_set          49152 22 
+2025-06-27T04:01:22.716110139Z nf_tables             192512 445 nft_counter,nft_compat,nft_fib_inet,nft_fib_ipv4,nft_fib_ipv6,nft_fib,nft_reject_inet,nft_reject,nft_ct,nf_tables_set,nft_chain_nat
+2025-06-27T04:01:22.716142541Z nfnetlink              16384  6 nf_conntrack_netlink,nft_compat,ip_set,nf_tables
+2025-06-27T04:01:22.716155142Z libcrc32c              16384  4 nf_nat,nf_conntrack,nf_tables,xfs
+2025-06-27T04:01:22.717273320Z modprobe: can't change directory to '/lib/modules': No such file or directory
+2025-06-27T04:01:22.723292044Z ip: can't find device 'ip_tables'
+2025-06-27T04:01:22.727801160Z modprobe: can't change directory to '/lib/modules': No such file or directory
+2025-06-27T04:01:22.730250833Z ip: can't find device 'ip6_tables'
+2025-06-27T04:01:22.734642441Z modprobe: can't change directory to '/lib/modules': No such file or directory
+2025-06-27T04:01:22.742513294Z iptables v1.8.11 (nf_tables)
+2025-06-27T04:01:22.749405279Z mount: permission denied (are you root?)
+2025-06-27T04:01:22.749961318Z Could not mount /sys/kernel/security.
+2025-06-27T04:01:22.749981219Z AppArmor detection and --privileged mode might break.
+2025-06-27T04:01:22.752651407Z mount: permission denied (are you root?)
 *********
 Pulling docker image docker:latest ...
 Using docker image sha256:6892cb0e669d8bf6d40d1421bfd62b0aec81041706f7b45de7a03514cfef527b for docker:latest with digest docker@sha256:d33eb93fe02683e984e6f8a93c0b3d85bb74f56ec83922bc39fb34ba23ab42bc ...
 Preparing environment
 00:01
-Running on runner-feexmax-project-48368-concurrent-0 via l7lt2apmglr0004...
+Running on runner-92btkp-project-48368-concurrent-0 via l7lt2apmglr0005...
 Getting source from Git repository
-00:02
+00:05
 Fetching changes with git depth set to 20...
 Reinitialized existing Git repository in /builds/fts-apimanagement/fts-python-microservices/ai-chatbot/.git/
 Checking out 2b8ab071 as detached HEAD (ref is main)...
@@ -46,9 +45,13 @@ Skipping Git submodules setup
 Executing "step_script" stage of the job script
 00:03
 Using docker image sha256:6892cb0e669d8bf6d40d1421bfd62b0aec81041706f7b45de7a03514cfef527b for docker:latest with digest docker@sha256:d33eb93fe02683e984e6f8a93c0b3d85bb74f56ec83922bc39fb34ba23ab42bc ...
-$ echo "$Nexus_REPO_PASS" | docker login -u "$Nexus_REPO_USER" --password-stdin $NEXUS_REGISTRY
-time="2025-06-26T18:36:16Z" level=info msg="Error logging in to endpoint, trying next endpoint" endpoint="{false https://nexus-ci.nexus.onefiserv.net false false false 0xc000179680}" error="login attempt to https://nexus-ci.nexus.onefiserv.net/v2/ failed with status: 404 Not Found"
-login attempt to https://nexus-ci.nexus.onefiserv.net/v2/ failed with status: 404 Not Found
+$ echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
+WARNING! Your credentials are stored unencrypted in '/root/.docker/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+Login Succeeded
+$ docker build -t $FULL_IMAGE_NAME .
+ERROR: error during connect: Head "http://docker:2375/_ping": dial tcp: lookup docker on 10.225.225.12:53: no such host
 Cleaning up project directory and file based variables
-00:01
+00:02
 ERROR: Job failed: exit code 1
