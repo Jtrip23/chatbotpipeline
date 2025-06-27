@@ -1,17 +1,17 @@
 Running with gitlab-runner 16.11.2 (1d04b67a)
-  on l7lp2apmglr0003-Prod-Global-GitLab-Cloud-Shell-apihub-shared ZNFLWGL4, system ID: s_842e1c8182d6
+  on l7lp2apmglr0004-Prod-Global-GitLab-Cloud-Shell-apihub-shared otbgjhye, system ID: s_842e1c8182d6
 Resolving secrets
 Preparing the "shell" executor
 00:00
 Using Shell (bash) executor...
 Preparing environment
 00:00
-Running on l7lp2apmglr0003...
+Running on l7lp2apmglr0004...
 Getting source from Git repository
 00:01
 Fetching changes with git depth set to 20...
-Reinitialized existing Git repository in /home/gitlab-runner/builds/ZNFLWGL4/0/fts-apimanagement/fts-python-microservices/ai-chatbot/.git/
-Checking out 818096eb as detached HEAD (ref is main)...
+Reinitialized existing Git repository in /home/gitlab-runner/builds/otbgjhye/0/fts-apimanagement/fts-python-microservices/ai-chatbot/.git/
+Checking out bb3e3226 as detached HEAD (ref is main)...
 Skipping Git submodules setup
 Executing "step_script" stage of the job script
 00:15
@@ -27,8 +27,8 @@ Building Docker image with Python code...
 $ docker build -t $FULL_IMAGE_NAME .
 #0 building with "default" instance using docker driver
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 923B done
-#1 DONE 0.0s
+#1 transferring dockerfile: 924B done
+#1 DONE 0.1s
 #2 [internal] load metadata for fmk.nexus.onefiserv.net/fmk/python/python-3.9:FMK-01-10-24
 #2 DONE 0.7s
 #3 [internal] load .dockerignore
@@ -37,12 +37,12 @@ $ docker build -t $FULL_IMAGE_NAME .
 #4 [1/6] FROM fmk.nexus.onefiserv.net/fmk/python/python-3.9:FMK-01-10-24@sha256:27e209951b4198d676b6af7b2eef6029bd67ba1682dd91c8037f5ba8dd7c7302
 #4 DONE 0.0s
 #5 [internal] load build context
-#5 transferring context: 56.16kB 0.0s done
+#5 transferring context: 64.94kB 0.0s done
 #5 DONE 0.1s
 #4 [1/6] FROM fmk.nexus.onefiserv.net/fmk/python/python-3.9:FMK-01-10-24@sha256:27e209951b4198d676b6af7b2eef6029bd67ba1682dd91c8037f5ba8dd7c7302
 #4 CACHED
 #6 [2/6] COPY . /app
-#6 DONE 0.5s
+#6 DONE 0.6s
 #7 [3/6] WORKDIR /app
 #7 DONE 0.2s
 #8 [4/6] COPY requirements.txt ./
@@ -50,31 +50,31 @@ $ docker build -t $FULL_IMAGE_NAME .
 #9 [5/6] ADD requirements.txt /app/
 #9 DONE 0.2s
 #10 [6/6] RUN python -m pip install -r requirements.txt
-#10 1.578 Looking in indexes: https://nexus.onefiserv.net/repository/pypi-proxy/simple
-#10 1.589 Collecting fiservai@ https://github.com/tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl (from -r requirements.txt (line 2))
-#10 1.688   WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-#10 2.272   WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-#10 3.328   WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-#10 5.412   WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-#10 9.496   WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-#10 9.587 ERROR: Could not install packages due to an OSError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))
-#10 9.587 
-#10 10.06 
-#10 10.06 [notice] A new release of pip is available: 23.3.1 -> 25.1.1
-#10 10.06 [notice] To update, run: pip install --upgrade pip
+#10 1.917 Looking in indexes: https://nexus.onefiserv.net/repository/pypi-proxy/simple
+#10 1.931 Collecting fiservai@ https://github.com/tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl (from -r requirements.txt (line 2))
+#10 2.025   WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+#10 2.594   WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+#10 3.653   WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+#10 5.711   WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+#10 9.784   WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+#10 9.842 ERROR: Could not install packages due to an OSError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))
+#10 9.842 
+#10 10.48 
+#10 10.48 [notice] A new release of pip is available: 23.3.1 -> 25.1.1
+#10 10.48 [notice] To update, run: pip install --upgrade pip
 #10 ERROR: process "/bin/sh -c python -m pip install -r requirements.txt" did not complete successfully: exit code: 1
 ------
  > [6/6] RUN python -m pip install -r requirements.txt:
-1.688   WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-2.272   WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-3.328   WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-5.412   WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-9.496   WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-9.587 ERROR: Could not install packages due to an OSError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))
-9.587 
-10.06 
-10.06 [notice] A new release of pip is available: 23.3.1 -> 25.1.1
-10.06 [notice] To update, run: pip install --upgrade pip
+2.025   WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+2.594   WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+3.653   WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+5.711   WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+9.784   WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)'))': /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
+9.842 ERROR: Could not install packages due to an OSError: HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))
+9.842 
+10.48 
+10.48 [notice] A new release of pip is available: 23.3.1 -> 25.1.1
+10.48 [notice] To update, run: pip install --upgrade pip
 ------
 Dockerfile:26
 --------------------
