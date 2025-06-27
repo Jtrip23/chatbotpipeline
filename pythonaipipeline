@@ -1,0 +1,71 @@
+variables :
+  ADMIN_UI_DRUPAL_SERVER_IP :  10.44.18.166
+  ADMIN_UI_DRUPAL_SERVER_USERNAME : apimtestadmin
+  NPM_TOKEN: ${CI_JOB_TOKEN}
+  SSH_PRIVATE_KEY: ${ADMIN_UI_SSH_KEY}
+  STAGING_DIR: /home/apimtestadmin/microservice
+  ADMIN_PASS: Apimtestadmin@1
+  DOCKER_IMAGE_NAME: $DOCKER_IMAGE_NAME
+  MAVEN_CLI_OPTS: "-s $CI_PROJECT_DIR/.m2/cicd-settings.xml --batch-mode"
+  JAR_NAME: $JAR_NAME
+  SCANCENTRAL_BUILD_OPTS: "-bt mvn"
+  FORTIFY_URL: "$SSC_URL/html/ssc/versions"
+  REPO_NAME : "test"
+
+stages:
+  - config
+  #- scan
+  - build
+  - push
+
+#services:
+  #- docker:19.03.12-dind
+  #- docker:20.10.16-dind
+  
+default:
+  tags:
+    - $APIGEE_SHELL_RUNNGER_TAG
+
+include: 
+  - ci/global.variable.yml  
+
+git-config:
+  stage: config
+  tags:
+   - apihub-shell-prod
+
+  script:
+    - |
+      pwd && ls -ltr
+      echo GIT_URL = $APIGEE_GIT_URL
+      echo "Setting branch protection for feature-*, develop and hotfix branches"
+      for BRANCH in develop $DEFAULT_BRANCH
+      do
+        echo "https://$APIGEE_GIT_URL/fts-apimanagement/fts-python-microservices/$DOCKER_IMAGE_NAME/protected_branches?name=$BRANCH&push_access_level=30&merge_access_level=30&unprotect_access_level=40"
+        curl --request POST --header "PRIVATE-TOKEN:$(echo "$APIM_GITLAB_PRIVATE_TOKEN" | base64 -d)" "$APIGEE_GIT_URL/fts-apimanagement/fts-python-microservices/$DOCKER_IMAGE_NAME/protected_branches?name=$BRANCH&push_access_level=30&merge_access_level=30&unprotect_access_level=40"
+      done
+
+build_image:
+  stage: build
+  tags:
+    - apihub-shell-prod
+  script:
+      -  | 
+        echo "Alpha"
+        printenv
+        echo "$Nexus_REPO_PASS" | docker login --password-stdin --username $Nexus_REPO_USER $FMK_CI
+        echo "Alpha123"
+        docker build --build-arg jarname=$JAR_NAME . -t  $FMK_CI/apm/0006528/$DOCKER_IMAGE_NAME:dev-$CI_COMMIT_SHORT_SHA
+        echo "Alpha456"
+        docker push $FMK_CI/apm/0006528/$DOCKER_IMAGE_NAME:dev-$CI_COMMIT_SHORT_SHA
+        docker tag $FMK_CI/apm/0006528/$DOCKER_IMAGE_NAME:dev-$CI_COMMIT_SHORT_SHA $FMK_CI/apm/0006528/$DOCKER_IMAGE_NAME-dev:$CI_COMMIT_SHORT_SHA
+        docker push $FMK_CI/apm/0006528/$DOCKER_IMAGE_NAME-dev:$CI_COMMIT_SHORT_SHA
+
+  
+push_image:
+  stage: push
+  script:
+    docker push $FMK_CI/apm/0006528/$DOCKER_IMAGE_NAME-dev:$CI_COMMIT_SHORT_SHA
+  
+  
+
