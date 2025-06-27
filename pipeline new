@@ -9,16 +9,15 @@ variables:
   NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
   NEXUS_REGISTRY_URL: "fmk.nexus-ci.onefiserv.net/apm/006528"
   FULL_IMAGE_NAME: "$NEXUS_REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG"
-  DOCKER_TLS_CERTDIR: ""
+
+default:
+  tags:
+    - apimhub-shell  # Runner with Docker installed
 
 build_image:
   stage: build
-  image: docker:latest
-  services:
-    - name: docker:dind
-  before_script:
-    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
   script:
+    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
     - docker build -t $FULL_IMAGE_NAME .
   rules:
     - changes:
@@ -26,12 +25,8 @@ build_image:
 
 push_image:
   stage: push
-  image: docker:latest
-  services:
-    - name: docker:dind
-  before_script:
-    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
   script:
+    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
     - docker push $FULL_IMAGE_NAME
   rules:
     - changes:
