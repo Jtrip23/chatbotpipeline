@@ -1,20 +1,21 @@
-variables:
-  DOCKER_IMAGE_NAME: $CI_PROJECT_NAME
-  IMAGE_TAG: "dev-$CI_COMMIT_SHORT_SHA"
-  NEXUS_REPO_USER: "svc-apim-cicd-dev"
-  NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
-  NEXUS_REGISTRY: "fmk.nexus-ci.onefiserv.net/apm/0006528"
-  FULL_IMAGE_NAME: "$NEXUS_REGISTRY/$DOCKER_IMAGE_NAME:$IMAGE_TAG"
-
 stages:
   - build_and_push
 
-default:
-  tags:
-    - apihub-shell-prod  # Uses shell runner with Docker installed
+variables:
+  IMAGE_NAME: "$CI_PROJECT_NAME"
+  IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+  NEXUS_REPO_USER: "svc-apim-cicd-dev"
+  NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
+  NEXUS_REGISTRY: "fmk.nexus-ci.onefiserv.net/apm/006528"
+  FULL_IMAGE_NAME: "$NEXUS_REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
 
 build_and_push_image:
   stage: build_and_push
+  tags:
+    - apihub-shell-prod  # Ensure your shell runner has this tag
+
+  image: ""   # REMOVE image field completely for shell runners
+
   script:
     - echo "Logging in to Nexus Docker registry..."
     - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY
@@ -24,6 +25,7 @@ build_and_push_image:
 
     - echo "Pushing Docker image to Nexus..."
     - docker push $FULL_IMAGE_NAME
+
   rules:
     - changes:
-        - "**/*.py"    # Only trigger when Python code changes
+        - "**/*"
