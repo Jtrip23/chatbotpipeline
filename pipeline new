@@ -3,44 +3,36 @@ stages:
   - push
 
 variables:
-  APM_ID: "0006528"
-  IMAGE_NAME: "apihub-apigee-python"
+  IMAGE_NAME: "$CI_PROJECT_NAME"
   IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
-  NEXUS_REGISTRY: "nexus-ci.nexus.onefiserv.net"
-  NEXUS_REPO_PATH: "$NEXUS_REGISTRY/apm/$APM_ID/$IMAGE_NAME:$IMAGE_TAG"
-  DOCKER_HOST: "tcp://docker:2375"
+  NEXUS_REPO_USER: "svc-apim-cicd-dev"
+  NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
+  NEXUS_REGISTRY_URL: "nexus-ci.nexus.onefiserv.net/repository/docker-hosted"
+  FULL_IMAGE_NAME: "$NEXUS_REGISTRY_URL/$IMAGE_NAME:$IMAGE_TAG"
   DOCKER_TLS_CERTDIR: ""
 
-build_python_image:
+build_image:
   stage: build
   image: docker:latest
   services:
     - name: docker:dind
-      alias: docker
   before_script:
-    - echo "$Nexus_REPO_PASS" | docker login -u "$Nexus_REPO_USER" --password-stdin $NEXUS_REGISTRY
+    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
   script:
-    - |
-      echo "Checking for Python file changes..."
-      if git diff --name-only $CI_COMMIT_BEFORE_SHA $CI_COMMIT_SHA | grep -E '\.py$'; then
-        echo "Python code changed. Building Docker image..."
-        docker build -t $NEXUS_REPO_PATH .
-      else
-        echo "No Python code changes detected. Skipping build."
-        exit 0
-      fi
+    - docker build -t $FULL_IMAGE_NAME .
+  rules:
+    - changes:
+        - "**/*"
 
-push_to_nexus:
+push_image:
   stage: push
   image: docker:latest
   services:
     - name: docker:dind
-      alias: docker
   before_script:
-    - echo "$Nexus_REPO_PASS" | docker login -u "$Nexus_REPO_USER" --password-stdin $NEXUS_REGISTRY
+    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY_URL
   script:
-    - echo "Pushing Docker image to Nexus..."
-    - docker push $NEXUS_REPO_PATH
+    - docker push $FULL_IMAGE_NAME
   rules:
     - changes:
-        - "**/*.py"
+        - "**/*"
