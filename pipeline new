@@ -6,7 +6,7 @@ variables:
   IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
   NEXUS_REPO_USER: "svc-apim-cicd-dev"
   NEXUS_REPO_PASS: "F_arX1Z%fIQSfZEM@aJL9RRk*"
-  NEXUS_REGISTRY: "fmk.nexus-ci.onefiserv.net/apm/006528"
+  NEXUS_REGISTRY: "fmk.nexus.onefiserv.net/apm/006528"
   FULL_IMAGE_NAME: "$NEXUS_REGISTRY/$IMAGE_NAME:$IMAGE_TAG"
 
 build_and_push_image:
