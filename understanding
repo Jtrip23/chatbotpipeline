@@ -1,3 +1,0 @@
-The error is not because of the requirements.txt file . The pipeline is failing because it can’t download the fiservai package from GitHub. This might be a network or SSL issue on the build server. The server may not be able to access GitHub to install that package.
-his is my understanding and this is not a problem with the requirements.txt file.
-Please correct me if I am wrong.
