@@ -14,13 +14,18 @@ build_and_push_image:
   stage: build_and_push
   tags:
     - apihub-shell-prod
+  only:
+    - test
   script:
-    - echo "Logging in to Nexus Docker registry..."
-    - echo "$NEXUS_REPO_PASS" | docker login -u "$NEXUS_REPO_USER" --password-stdin $NEXUS_REGISTRY
-    - echo "Building Docker image with Python code..."
-    - docker build -t $FULL_IMAGE_NAME .
+    - echo "Test"
+    - echo "Logging into Nexus Docker registry..."
+    - docker login -u "$NEXUS_REPO_USER" -p "$NEXUS_REPO_PASS" $NEXUS_REGISTRY
+
+    - echo "Building Docker image..."
+    - docker build . -t $FULL_IMAGE_NAME
+
     - echo "Pushing Docker image to Nexus..."
     - docker push $FULL_IMAGE_NAME
-  rules:
-    - changes:
-        - "**/*"
+
+  environment:
+    name: test
