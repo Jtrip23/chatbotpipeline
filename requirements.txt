@@ -1,7 +1,0 @@
-#openai==1.55.3
-fiservai @ https://github.com/tomeck/fsaipkg/releases/download/v0.0.11/fiservai-0.0.11-py3-none-any.whl
-streamlit==1.36.0
-streamlit-toggle-switch==1.0.2
-requests==2.32.3
-pip @ https://nexus.onefiserv.net/repository/pypi-proxy/packages/pip/25.0.1/pip-25.0.1-py3-none-any.whl
-pip == 25.0.1
